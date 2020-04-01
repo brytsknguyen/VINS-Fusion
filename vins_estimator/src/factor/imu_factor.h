@@ -113,8 +113,8 @@ class IMUFactor : public ceres::SizedCostFunction<15, 7, 9, 7, 9>
             jacobian_pose_i.block<3, 3>(O_R, O_R) = -(Qj.inverse() * Qi).toRotationMatrix();
 #else
                 Eigen::Quaterniond corrected_delta_q = pre_integration->delta_q * Utility::deltaQ(dq_dbg * (Bgi - pre_integration->linearized_bg));
-                jacobian_pose_i.block<3, 3>(O_R, O_R) = -(Utility::Qleft(Qj.inverse() * Qi)
-                                                        * Utility::Qright(corrected_delta_q)).bottomRightCorner<3, 3>();
+                jacobian_pose_i.block<3, 3>(O_R, O_R) = -(Utility::Qright(corrected_delta_q)
+                                                          *Utility::Qleft(Qj.inverse() * Qi)).bottomRightCorner<3, 3>();
 #endif
 
                 jacobian_pose_i.block<3, 3>(O_V, O_R) = Utility::skewSymmetric(Qi.inverse() * (G * sum_dt + Vj - Vi));
