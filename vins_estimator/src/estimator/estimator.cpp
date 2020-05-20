@@ -943,7 +943,7 @@ void Estimator::double2vector()
             ric[i] = Quaterniond(para_Ex_Pose[i][6],
                                  para_Ex_Pose[i][3],
                                  para_Ex_Pose[i][4],
-                                 para_Ex_Pose[i][5]).toRotationMatrix();
+                                 para_Ex_Pose[i][5]).normalized().toRotationMatrix();
         }
     }
 
@@ -1140,7 +1140,7 @@ void Estimator::optimization()
 
     if(frame_count < WINDOW_SIZE)
         return;
-
+    
     TicToc t_whole_marginalization;
     if (marginalization_flag == MARGIN_OLD)
     {
