@@ -83,15 +83,17 @@ void sync_process()
                 double time0 = img0_buf.front()->header.stamp.toSec();
                 double time1 = img1_buf.front()->header.stamp.toSec();
                 // 0.003s sync tolerance
+                // if(time0 < time1 - 0.07)
                 if(time0 < time1 - 0.003)
                 {
                     img0_buf.pop();
-                    printf("throw img0\n");
+                    printf("throw img0. time diff: %6.3f.\n", time0 - time1);
                 }
+                // else if(time0 > time1 + 0.07)
                 else if(time0 > time1 + 0.003)
                 {
                     img1_buf.pop();
-                    printf("throw img1\n");
+                    printf("throw img1. time diff: %6.3f.\n", time0 - time1);
                 }
                 else
                 {

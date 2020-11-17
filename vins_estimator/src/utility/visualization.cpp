@@ -350,6 +350,16 @@ void pubTF(const Estimator &estimator, const std_msgs::Header &header)
     odometry.pose.pose.orientation.y = tmp_q.y();
     odometry.pose.pose.orientation.z = tmp_q.z();
     odometry.pose.pose.orientation.w = tmp_q.w();
+
+    odometry.pose.covariance[0] = estimator.tic[1].x();
+    odometry.pose.covariance[1] = estimator.tic[1].y();
+    odometry.pose.covariance[2] = estimator.tic[1].z();
+
+    odometry.pose.covariance[3] = Quaterniond(estimator.ric[1]).x();
+    odometry.pose.covariance[4] = Quaterniond(estimator.ric[1]).y();
+    odometry.pose.covariance[5] = Quaterniond(estimator.ric[1]).z();
+    odometry.pose.covariance[6] = Quaterniond(estimator.ric[1]).w();
+    
     pub_extrinsic.publish(odometry);
 
 }

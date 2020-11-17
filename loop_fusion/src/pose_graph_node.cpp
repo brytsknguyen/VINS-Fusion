@@ -499,5 +499,9 @@ int main(int argc, char **argv)
     
     ros::spin();
 
+    m_process.lock();
+    posegraph.savePoseGraph();
+    m_process.unlock();
+
     return 0;
 }
