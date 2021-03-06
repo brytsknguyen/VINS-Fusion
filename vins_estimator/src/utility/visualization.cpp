@@ -170,8 +170,8 @@ void pubOdometry(const Estimator &estimator, const std_msgs::Header &header)
               << estimator.Vs[WINDOW_SIZE].z() << "," << endl;
         foutC.close();
         Eigen::Vector3d tmp_T = estimator.Ps[WINDOW_SIZE];
-        printf("time: %f, t: %f %f %f q: %f %f %f %f \n", header.stamp.toSec(), tmp_T.x(), tmp_T.y(), tmp_T.z(),
-                                                          tmp_Q.w(), tmp_Q.x(), tmp_Q.y(), tmp_Q.z());
+        // printf("time: %f, t: %f %f %f q: %f %f %f %f \n", header.stamp.toSec(), tmp_T.x(), tmp_T.y(), tmp_T.z(),
+        //                                                   tmp_Q.w(), tmp_Q.x(), tmp_Q.y(), tmp_Q.z());
     }
 }
 
@@ -254,12 +254,15 @@ void pubPointCloud(const Estimator &estimator, const std_msgs::Header &header)
 
     for (auto &it_per_id : estimator.f_manager.feature)
     {
-        int used_num;
-        used_num = it_per_id.feature_per_frame.size();
-        if (!(used_num >= 2 && it_per_id.start_frame < WINDOW_SIZE - 2))
+        // int used_num;
+        // used_num = it_per_id.feature_per_frame.size();
+        // if (!(used_num >= 2 && it_per_id.start_frame < WINDOW_SIZE - 2))
+        //     continue;
+        // if (it_per_id.start_frame > WINDOW_SIZE * 3.0 / 4.0 || it_per_id.solve_flag != 1)
+        //     continue;
+        if (it_per_id.estimated_depth < 0)
             continue;
-        if (it_per_id.start_frame > WINDOW_SIZE * 3.0 / 4.0 || it_per_id.solve_flag != 1)
-            continue;
+
         int imu_i = it_per_id.start_frame;
         Vector3d pts_i = it_per_id.feature_per_frame[0].point * it_per_id.estimated_depth;
         Vector3d w_pts_i = estimator.Rs[imu_i] * (estimator.ric[0] * pts_i + estimator.tic[0]) + estimator.Ps[imu_i];
@@ -395,7 +398,11 @@ void pubKeyframe(const Estimator &estimator)
         for (auto &it_per_id : estimator.f_manager.feature)
         {
             int frame_size = it_per_id.feature_per_frame.size();
-            if(it_per_id.start_frame < WINDOW_SIZE - 2 && it_per_id.start_frame + frame_size - 1 >= WINDOW_SIZE - 2 && it_per_id.solve_flag == 1)
+            if(it_per_id.start_frame < WINDOW_SIZE - 2 
+                &&
+               it_per_id.start_frame + frame_size - 1 >= WINDOW_SIZE - 2
+                &&
+               it_per_id.solve_flag == 1)
             {
 
                 int imu_i = it_per_id.start_frame;

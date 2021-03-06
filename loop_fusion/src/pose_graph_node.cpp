@@ -225,8 +225,6 @@ void vio_callback(const nav_msgs::Odometry::ConstPtr &pose_msg)
     cameraposevisual.reset();
     cameraposevisual.add_pose(vio_t_cam, vio_q_cam);
     cameraposevisual.publish_by(pub_camera_pose_visual, pose_msg->header);
-
-
 }
 
 void extrinsic_callback(const nav_msgs::Odometry::ConstPtr &pose_msg)
@@ -286,10 +284,10 @@ void process()
 
         if (pose_msg != NULL)
         {
-            //printf(" pose time %f \n", pose_msg->header.stamp.toSec());
+            //printf(" pose time %f \n",  pose_msg->header.stamp.toSec());
             //printf(" point time %f \n", point_msg->header.stamp.toSec());
             //printf(" image time %f \n", image_msg->header.stamp.toSec());
-            // skip fisrt few
+            // skip fisrt 9999999
             if (skip_first_cnt < SKIP_FIRST_CNT)
             {
                 skip_first_cnt++;
@@ -361,7 +359,7 @@ void process()
                 }
 
                 KeyFrame* keyframe = new KeyFrame(pose_msg->header.stamp.toSec(), frame_index, T, R, image,
-                                   point_3d, point_2d_uv, point_2d_normal, point_id, sequence);   
+                                                  point_3d, point_2d_uv, point_2d_normal, point_id, sequence);   
                 m_process.lock();
                 start_flag = 1;
                 posegraph.addKeyFrame(keyframe, 1);
@@ -449,8 +447,8 @@ int main(int argc, char **argv)
     printf("cam calib path: %s\n", cam0Path.c_str());
     m_camera = camodocal::CameraFactory::instance()->generateCameraFromYamlFile(cam0Path.c_str());
 
-    fsSettings["image0_topic"] >> IMAGE_TOPIC;        
-    fsSettings["pose_graph_save_path"] >> POSE_GRAPH_SAVE_PATH;
+    fsSettings["image0_topic"] >> IMAGE_TOPIC;
+    n.param<std::string>("pose_graph_save_path", POSE_GRAPH_SAVE_PATH, "/home/tmn/output");
     fsSettings["output_path"] >> VINS_RESULT_PATH;
     fsSettings["save_image"] >> DEBUG_IMAGE;
 
@@ -487,8 +485,8 @@ int main(int argc, char **argv)
 
     pub_match_img = n.advertise<sensor_msgs::Image>("match_image", 1000);
     pub_camera_pose_visual = n.advertise<visualization_msgs::MarkerArray>("camera_pose_visual", 1000);
-    pub_point_cloud = n.advertise<sensor_msgs::PointCloud>("point_cloud_loop_rect", 1000);
-    pub_margin_cloud = n.advertise<sensor_msgs::PointCloud>("margin_cloud_loop_rect", 1000);
+    pub_point_cloud   = n.advertise<sensor_msgs::PointCloud>("point_cloud_loop_rect", 1000);
+    pub_margin_cloud  = n.advertise<sensor_msgs::PointCloud>("margin_cloud_loop_rect", 1000);
     pub_odometry_rect = n.advertise<nav_msgs::Odometry>("odometry_rect", 1000);
 
     std::thread measurement_process;

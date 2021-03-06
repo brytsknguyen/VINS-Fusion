@@ -338,11 +338,12 @@ void FeatureManager::triangulate(int frameCnt, Vector3d Ps[], Matrix3d Rs[], Vec
                 it_per_id.estimated_depth = depth;
             else
                 it_per_id.estimated_depth = INIT_DEPTH;
-            /*
-            Vector3d ptsGt = pts_gt[it_per_id.feature_id];
-            printf("stereo %d pts: %f %f %f gt: %f %f %f \n",it_per_id.feature_id, point3d.x(), point3d.y(), point3d.z(),
-                                                            ptsGt.x(), ptsGt.y(), ptsGt.z());
-            */
+            
+            // printf("stereo %d. pts: %f %f %f. Depth: %f\n",
+            //         it_per_id.feature_id, point3d.x(), point3d.y(), point3d.z(),
+            //         depth
+            //       );
+
             continue;
         }
         else if(it_per_id.feature_per_frame.size() > 1)

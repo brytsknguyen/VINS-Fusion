@@ -84,7 +84,7 @@ void PoseGraph::addKeyFrame(KeyFrame* cur_kf, bool flag_detect_loop)
     
     cur_kf->getVioPose(vio_P_cur, vio_R_cur);
     vio_P_cur = w_r_vio * vio_P_cur + w_t_vio;
-    vio_R_cur = w_r_vio *  vio_R_cur;
+    vio_R_cur = w_r_vio * vio_R_cur;
     cur_kf->updateVioPose(vio_P_cur, vio_R_cur);
     cur_kf->index = global_index;
     global_index++;
@@ -168,7 +168,7 @@ void PoseGraph::addKeyFrame(KeyFrame* cur_kf, bool flag_detect_loop)
     Quaterniond Q{R};
     geometry_msgs::PoseStamped pose_stamped;
     pose_stamped.header.stamp = ros::Time(cur_kf->time_stamp);
-    pose_stamped.header.frame_id = "world";
+    pose_stamped.header.frame_id = "vio_init";
     pose_stamped.pose.position.x = P.x() + VISUALIZATION_SHIFT_X;
     pose_stamped.pose.position.y = P.y() + VISUALIZATION_SHIFT_Y;
     pose_stamped.pose.position.z = P.z();
@@ -489,7 +489,7 @@ void PoseGraph::optimize4DoF()
                 t_array[i][0] = tmp_t(0);
                 t_array[i][1] = tmp_t(1);
                 t_array[i][2] = tmp_t(2);
-                q_array[i] = tmp_q;
+                q_array[i]    = tmp_q;
 
                 Vector3d euler_angle = Utility::R2ypr(tmp_q.toRotationMatrix());
                 euler_array[i][0] = euler_angle.x();
@@ -512,16 +512,23 @@ void PoseGraph::optimize4DoF()
                 {
                   if (i - j >= 0 && sequence_array[i] == sequence_array[i-j])
                   {
-                    Vector3d euler_conncected = Utility::R2ypr(q_array[i-j].toRotationMatrix());
-                    Vector3d relative_t(t_array[i][0] - t_array[i-j][0], t_array[i][1] - t_array[i-j][1], t_array[i][2] - t_array[i-j][2]);
+                    Vector3d euler_connected = Utility::R2ypr(q_array[i-j].toRotationMatrix());
+                    Vector3d relative_t(t_array[i][0] - t_array[i-j][0],
+                                        t_array[i][1] - t_array[i-j][1],
+                                        t_array[i][2] - t_array[i-j][2]);
                     relative_t = q_array[i-j].inverse() * relative_t;
                     double relative_yaw = euler_array[i][0] - euler_array[i-j][0];
-                    ceres::CostFunction* cost_function = FourDOFError::Create( relative_t.x(), relative_t.y(), relative_t.z(),
-                                                   relative_yaw, euler_conncected.y(), euler_conncected.z());
-                    problem.AddResidualBlock(cost_function, NULL, euler_array[i-j], 
-                                            t_array[i-j], 
-                                            euler_array[i], 
-                                            t_array[i]);
+                    ceres::CostFunction* cost_function = FourDOFError::Create(relative_t.x(),
+                                                                              relative_t.y(),
+                                                                              relative_t.z(),
+                                                                              relative_yaw,
+                                                                              euler_connected.y(),
+                                                                              euler_connected.z());
+                    problem.AddResidualBlock(cost_function, NULL,
+                                             euler_array[i-j], 
+                                             t_array[i-j], 
+                                             euler_array[i], 
+                                             t_array[i]);
                   }
                 }
 
@@ -531,16 +538,18 @@ void PoseGraph::optimize4DoF()
                 {
                     assert((*it)->loop_index >= first_looped_index);
                     int connected_index = getKeyFrame((*it)->loop_index)->local_index;
-                    Vector3d euler_conncected = Utility::R2ypr(q_array[connected_index].toRotationMatrix());
+                    Vector3d euler_connected = Utility::R2ypr(q_array[connected_index].toRotationMatrix());
                     Vector3d relative_t;
                     relative_t = (*it)->getLoopRelativeT();
                     double relative_yaw = (*it)->getLoopRelativeYaw();
                     ceres::CostFunction* cost_function = FourDOFWeightError::Create( relative_t.x(), relative_t.y(), relative_t.z(),
-                                                                               relative_yaw, euler_conncected.y(), euler_conncected.z());
-                    problem.AddResidualBlock(cost_function, loss_function, euler_array[connected_index], 
-                                                                  t_array[connected_index], 
-                                                                  euler_array[i], 
-                                                                  t_array[i]);
+                                                                               relative_yaw, euler_connected.y(), euler_connected.z());
+                    problem.AddResidualBlock(cost_function,
+                                             loss_function,
+                                             euler_array[connected_index], 
+                                             t_array[connected_index], 
+                                             euler_array[i], 
+                                             t_array[i]);
                     
                 }
                 
@@ -694,8 +703,8 @@ void PoseGraph::optimize6DoF()
                         relative_t = q_i_j.inverse() * relative_t;
                         Quaterniond relative_q = q_i_j.inverse() * q_i;
                         ceres::CostFunction* vo_function = RelativeRTError::Create(relative_t.x(), relative_t.y(), relative_t.z(),
-                                                                                relative_q.w(), relative_q.x(), relative_q.y(), relative_q.z(),
-                                                                                0.1, 0.01);
+                                                                                   relative_q.w(), relative_q.x(), relative_q.y(), relative_q.z(),
+                                                                                   0.1, 0.01);
                         problem.AddResidualBlock(vo_function, NULL, q_array[i-j], t_array[i-j], q_array[i], t_array[i]);
                     }
                 }
@@ -711,8 +720,8 @@ void PoseGraph::optimize6DoF()
                     Quaterniond relative_q;
                     relative_q = (*it)->getLoopRelativeQ();
                     ceres::CostFunction* loop_function = RelativeRTError::Create(relative_t.x(), relative_t.y(), relative_t.z(),
-                                                                                relative_q.w(), relative_q.x(), relative_q.y(), relative_q.z(),
-                                                                                0.1, 0.01);
+                                                                                 relative_q.w(), relative_q.x(), relative_q.y(), relative_q.z(),
+                                                                                 0.1, 0.01);
                     problem.AddResidualBlock(loop_function, loss_function, q_array[connected_index], t_array[connected_index], q_array[i], t_array[i]);                    
                 }
                 
@@ -902,48 +911,49 @@ void PoseGraph::savePoseGraph()
     FILE *pFile;
     printf("pose graph path: %s\n",POSE_GRAPH_SAVE_PATH.c_str());
     printf("pose graph saving... \n");
-    string file_path = POSE_GRAPH_SAVE_PATH + "pose_graph.txt";
+    string file_path = POSE_GRAPH_SAVE_PATH + "pose_graph.csv";
     pFile = fopen (file_path.c_str(),"w");
     //fprintf(pFile, "index time_stamp Tx Ty Tz Qw Qx Qy Qz loop_index loop_info\n");
     list<KeyFrame*>::iterator it;
     for (it = keyframelist.begin(); it != keyframelist.end(); it++)
     {
         std::string image_path, descriptor_path, brief_path, keypoints_path;
-        if (DEBUG_IMAGE)
-        {
-            image_path = POSE_GRAPH_SAVE_PATH + to_string((*it)->index) + "_image.png";
-            imwrite(image_path.c_str(), (*it)->image);
-        }
+        // if (DEBUG_IMAGE)
+        // {
+        //     image_path = POSE_GRAPH_SAVE_PATH + to_string((*it)->index) + "_image.png";
+        //     imwrite(image_path.c_str(), (*it)->image);
+        // }
         Quaterniond VIO_tmp_Q{(*it)->vio_R_w_i};
         Quaterniond PG_tmp_Q{(*it)->R_w_i};
         Vector3d VIO_tmp_T = (*it)->vio_T_w_i;
-        Vector3d PG_tmp_T = (*it)->T_w_i;
+        Vector3d PG_tmp_T  = (*it)->T_w_i;
 
-        fprintf (pFile, " %d %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d %f %f %f %f %f %f %f %f %d\n",(*it)->index, (*it)->time_stamp, 
-                                    VIO_tmp_T.x(), VIO_tmp_T.y(), VIO_tmp_T.z(), 
-                                    PG_tmp_T.x(), PG_tmp_T.y(), PG_tmp_T.z(), 
-                                    VIO_tmp_Q.w(), VIO_tmp_Q.x(), VIO_tmp_Q.y(), VIO_tmp_Q.z(), 
-                                    PG_tmp_Q.w(), PG_tmp_Q.x(), PG_tmp_Q.y(), PG_tmp_Q.z(), 
-                                    (*it)->loop_index, 
-                                    (*it)->loop_info(0), (*it)->loop_info(1), (*it)->loop_info(2), (*it)->loop_info(3),
-                                    (*it)->loop_info(4), (*it)->loop_info(5), (*it)->loop_info(6), (*it)->loop_info(7),
-                                    (int)(*it)->keypoints.size());
+        fprintf (pFile, " %d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%f,%f,%f,%f,%f,%f,%f,%f,%d\n",
+                        (*it)->index, (*it)->time_stamp, 
+                        VIO_tmp_T.x(), VIO_tmp_T.y(), VIO_tmp_T.z(), 
+                        VIO_tmp_Q.w(), VIO_tmp_Q.x(), VIO_tmp_Q.y(), VIO_tmp_Q.z(),
+                        PG_tmp_T.x(),  PG_tmp_T.y(),  PG_tmp_T.z(), 
+                        PG_tmp_Q.w(),  PG_tmp_Q.x(),  PG_tmp_Q.y(),  PG_tmp_Q.z(), 
+                        (*it)->loop_index, 
+                        (*it)->loop_info(0), (*it)->loop_info(1), (*it)->loop_info(2), (*it)->loop_info(3),
+                        (*it)->loop_info(4), (*it)->loop_info(5), (*it)->loop_info(6), (*it)->loop_info(7),
+                        (int)(*it)->keypoints.size());
 
-        // write keypoints, brief_descriptors   vector<cv::KeyPoint> keypoints vector<BRIEF::bitset> brief_descriptors;
-        assert((*it)->keypoints.size() == (*it)->brief_descriptors.size());
-        brief_path = POSE_GRAPH_SAVE_PATH + to_string((*it)->index) + "_briefdes.dat";
-        std::ofstream brief_file(brief_path, std::ios::binary);
-        keypoints_path = POSE_GRAPH_SAVE_PATH + to_string((*it)->index) + "_keypoints.txt";
-        FILE *keypoints_file;
-        keypoints_file = fopen(keypoints_path.c_str(), "w");
-        for (int i = 0; i < (int)(*it)->keypoints.size(); i++)
-        {
-            brief_file << (*it)->brief_descriptors[i] << endl;
-            fprintf(keypoints_file, "%f %f %f %f\n", (*it)->keypoints[i].pt.x, (*it)->keypoints[i].pt.y, 
-                                                     (*it)->keypoints_norm[i].pt.x, (*it)->keypoints_norm[i].pt.y);
-        }
-        brief_file.close();
-        fclose(keypoints_file);
+        // // write keypoints, brief_descriptors   vector<cv::KeyPoint> keypoints vector<BRIEF::bitset> brief_descriptors;
+        // assert((*it)->keypoints.size() == (*it)->brief_descriptors.size());
+        // brief_path = POSE_GRAPH_SAVE_PATH + to_string((*it)->index) + "_briefdes.dat";
+        // std::ofstream brief_file(brief_path, std::ios::binary);
+        // keypoints_path = POSE_GRAPH_SAVE_PATH + to_string((*it)->index) + "_keypoints.txt";
+        // FILE *keypoints_file;
+        // keypoints_file = fopen(keypoints_path.c_str(), "w");
+        // for (int i = 0; i < (int)(*it)->keypoints.size(); i++)
+        // {
+        //     brief_file << (*it)->brief_descriptors[i] << endl;
+        //     fprintf(keypoints_file, "%f %f %f %f\n", (*it)->keypoints[i].pt.x, (*it)->keypoints[i].pt.y, 
+        //                                              (*it)->keypoints_norm[i].pt.x, (*it)->keypoints_norm[i].pt.y);
+        // }
+        // brief_file.close();
+        // fclose(keypoints_file);
     }
     fclose(pFile);
 
