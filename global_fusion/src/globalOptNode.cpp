@@ -36,7 +36,7 @@ void publish_car_model(double t, Eigen::Vector3d t_w_car, Eigen::Quaterniond q_w
     visualization_msgs::MarkerArray markerArray_msg;
     visualization_msgs::Marker car_mesh;
     car_mesh.header.stamp = ros::Time(t);
-    car_mesh.header.frame_id = "world";
+    car_mesh.header.frame_id = "vio_init";
     car_mesh.type = visualization_msgs::Marker::MESH_RESOURCE;
     car_mesh.action = visualization_msgs::Marker::ADD;
     car_mesh.id = 0;
@@ -128,8 +128,8 @@ void vio_callback(const nav_msgs::Odometry::ConstPtr &pose_msg)
 
     nav_msgs::Odometry odometry;
     odometry.header = pose_msg->header;
-    odometry.header.frame_id = "world";
-    odometry.child_frame_id = "world";
+    odometry.header.frame_id = "vio_init";
+    odometry.child_frame_id = "vio_init";
     odometry.pose.pose.position.x = global_t.x();
     odometry.pose.pose.position.y = global_t.y();
     odometry.pose.pose.position.z = global_t.z();
