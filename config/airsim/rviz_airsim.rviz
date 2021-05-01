@@ -6,9 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /VIOGroup1/VIOPath1
         - /VIOGroup1/VIOPath1/Status1
-        - /GlobalGroup1/GloablPath1
       Splitter Ratio: 0.4514285624027252
     Tree Height: 384
   - Class: rviz/Selection
@@ -91,7 +89,7 @@ Visualization Manager:
           Buffer Length: 1
           Class: rviz/Path
           Color: 239; 41; 41
-          Enabled: false
+          Enabled: true
           Head Diameter: 0.30000001192092896
           Head Length: 0.20000000298023224
           Length: 0.30000001192092896
@@ -109,7 +107,7 @@ Visualization Manager:
           Shaft Length: 0.10000000149011612
           Topic: /loop_fusion/pose_graph_path
           Unreliable: false
-          Value: false
+          Value: true
         - Alpha: 1
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
@@ -296,7 +294,7 @@ Visualization Manager:
         - Alpha: 1
           Buffer Length: 1
           Class: rviz/Path
-          Color: 239; 41; 41
+          Color: 0; 0; 255
           Enabled: true
           Head Diameter: 0.30000001192092896
           Head Length: 0.20000000298023224
@@ -313,7 +311,7 @@ Visualization Manager:
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: /loop_fusion/pose_graph_path
+          Topic: /globalEstimator/global_path
           Unreliable: false
           Value: true
         - Class: rviz/MarkerArray
@@ -352,25 +350,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/ThirdPersonFollower
-      Distance: 56.000938415527344
+      Distance: 20.42784309387207
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -5.441239356994629
-        Y: -7.9352216720581055
-        Z: -3.4848012924194336
+        X: -1.8814737796783447
+        Y: 0.12050899863243103
+        Z: -3.484800338745117
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.0947967916727066
+      Pitch: 1.0297966003417969
       Target Frame: body
       Value: ThirdPersonFollower (rviz)
-      Yaw: 5.540633678436279
+      Yaw: 3.1356444358825684
     Saved: ~
 Window Geometry:
   Displays:
