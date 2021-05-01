@@ -18,7 +18,7 @@
             args="$(find vins)/../config/clementi/viral_stereo_imu_config.yaml"
             output="screen"> </node>
 
-    <node respawn="true" pkg="loop_fusion" type="loop_fusion_node" name="loop_fusion_node"
+    <node respawn="true" pkg="loop_fusion" type="loop_fusion_node" name="loop_fusion"
             args="$(find vins)/../config/clementi/viral_stereo_imu_config.yaml" output="screen">
             <param name="pose_graph_save_path" value="$(arg log_dir)/vins_ba_"/>
     </node>

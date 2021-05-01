@@ -10,22 +10,22 @@
 
 
     <!-- ######### Choose the dataset ################################### -->
-    <arg name="bag_file" default = "/home/nuc/DATASETS/NTU_VIRAL/eee_01/eee_01.bag" />
+    <arg name="bag_file" default = "/home/nuc/DATASETS/AirSim/nbh_01/nbh_01.bag" />
 
 
     <!-- VINS node -->
     <node respawn="true" pkg="vins" type="vins_node" name="vins_estimator"
-            args="$(find vins)/../config/ntuviral/viral_stereo_imu_config.yaml"
+            args="$(find vins)/../config/airsim/viral_stereo_imu_config.yaml"
             output="screen"> </node>
 
     <node respawn="true" pkg="loop_fusion" type="loop_fusion_node" name="loop_fusion"
-            args="$(find vins)/../config/ntuviral/viral_stereo_imu_config.yaml" output="screen">
+            args="$(find vins)/../config/airsim/viral_stereo_imu_config.yaml" output="screen">
             <param name="pose_graph_save_path" value="$(arg log_dir)/vins_ba_"/>
     </node>
 
     <!-- Visualization node -->
     <node pkg="rviz" type="rviz" name="rviz" respawn="true"
-          args="-d $(find vins)/../config/ntuviral/rviz_ntuviral.rviz" />
+          args="-d $(find vins)/../config/airsim/rviz_airsim.rviz" />
 
     <!-- Static transform for vizualization -->
     <node pkg="tf" type="static_transform_publisher" name="world_vio_init_pub" args="0 0 0 0 0 0 1 world vio_init 1" />

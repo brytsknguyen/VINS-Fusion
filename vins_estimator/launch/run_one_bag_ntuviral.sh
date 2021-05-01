@@ -2,7 +2,7 @@
 
 export EPOC_DIR=$1;
 export DATASET_LOCATION=$2;
-export VINS_DIR=$3;
+export ROS_PKG_DIR=$3;
 export EXP_NAME=$4;
 export CAPTURE_SCREEN=$5;
 export LOG_DATA=$6;
@@ -34,8 +34,8 @@ fi
 echo BA LOG DIR: $BA_LOOP_LOG_DIR;
 
 mkdir -p $EXP_OUTPUT_DIR/ ;
-cp -R $VINS_DIR/../config $EXP_OUTPUT_DIR;
-cp -R $VINS_DIR/launch $EXP_OUTPUT_DIR;
+cp -R $ROS_PKG_DIR/../config $EXP_OUTPUT_DIR;
+cp -R $ROS_PKG_DIR/launch $EXP_OUTPUT_DIR;
 roslaunch vins run_ntuviral.launch log_dir:=$EXP_OUTPUT_DIR \
 log_dir:=$VIRAL_OUTPUT_DIR \
 autorun:=true \

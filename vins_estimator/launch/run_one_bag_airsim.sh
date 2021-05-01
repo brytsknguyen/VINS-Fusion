@@ -36,7 +36,7 @@ echo BA LOG DIR: $BA_LOOP_LOG_DIR;
 mkdir -p $EXP_OUTPUT_DIR/ ;
 cp -R $ROS_PKG_DIR/../config $EXP_OUTPUT_DIR;
 cp -R $ROS_PKG_DIR/launch $EXP_OUTPUT_DIR;
-roslaunch vins run_clementi.launch log_dir:=$EXP_OUTPUT_DIR \
+roslaunch vins run_airsim.launch log_dir:=$EXP_OUTPUT_DIR \
 log_dir:=$VIRAL_OUTPUT_DIR \
 autorun:=true \
 bag_file:=$DATASET_LOCATION/$EXP_NAME/$EXP_NAME.bag \
@@ -65,14 +65,17 @@ timeout $LOG_DUR rostopic echo -p --nostr --noarr /vins_estimator/imu_propagate 
 timeout $LOG_DUR rostopic echo -p --nostr --noarr /vins_estimator/odometry \
 > $EXP_OUTPUT_DIR/opt_odom.csv \
 & \
-timeout $LOG_DUR rostopic echo -p --nostr --noarr /leica/pose/relative \
+timeout $LOG_DUR rostopic echo -p --nostr --noarr /airsim_node/drone_0/odom_global \
 > $EXP_OUTPUT_DIR/leica_pose.csv \
 & \
 timeout $LOG_DUR rostopic echo -p --nostr --noarr /dji_sdk/imu \
 > $EXP_OUTPUT_DIR/dji_sdk_imu.csv \
 & \
-timeout $LOG_DUR rostopic echo -p --nostr --noarr /imu/imu \
+timeout $LOG_DUR rostopic echo -p --nostr --noarr /airsim_node/drone_0/imu/Imu \
 > $EXP_OUTPUT_DIR/vn100_imu.csv \
+& \
+timeout $LOG_DUR rostopic echo -p --nostr --noarr /viral2_odometry/optimization_status \
+> $EXP_OUTPUT_DIR/optimization_status.csv \
 ;
 else
 echo LOGGING OFF;
