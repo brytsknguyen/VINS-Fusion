@@ -17,14 +17,14 @@ image_height: 480
    
 
 # Extrinsic parameter between IMU and Camera.
-estimate_extrinsic: 1   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
+estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
                         # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
 
 body_T_cam0: !!opencv-matrix
    rows: 4
    cols: 4
    dt: d
-   data: [-0.99678687, -0.07625562, -0.02451573, -0.1474113,
+   data: [-0.99678687, -0.07625562, -0.02451573,  0.025,
           -0.02546845,  0.01154632,  0.99960894, -0.00951043,
           -0.07594273,  0.99702145, -0.01345134, -0.02414691,
            0,           0,           0,           1         ]
@@ -33,7 +33,7 @@ body_T_cam1: !!opencv-matrix
    rows: 4
    cols: 4
    dt: d
-   data: [-0.99678687, -0.07625562, -0.02451573, -0.0974113,
+   data: [-0.99678687, -0.07625562, -0.02451573, -0.025,
           -0.02546845,  0.01154632,  0.99960894, -0.00951043,
           -0.07594273,  0.99702145, -0.01345134, -0.02414691,
            0,           0,           0,           1         ]
@@ -61,7 +61,7 @@ acc_w: 5.0e-2         # accelerometer bias random work noise standard deviation.
 gyr_w: 3.0e-6         # gyroscope bias random work noise standard deviation.     #4.0e-5
 # acc_n: 0.1          # accelerometer measurement noise standard deviation. #0.2   0.04
 # gyr_n: 0.01         # gyroscope measurement noise standard deviation.     #0.05  0.004
-# acc_w: 0.001         # accelerometer bias random work noise standard deviation.  #0.002
+# acc_w: 0.001        # accelerometer bias random work noise standard deviation.  #0.002
 # gyr_w: 0.0001       # gyroscope bias random work noise standard deviation.     #4.0e-5
 g_norm: 9.805         # gravity magnitude
 
