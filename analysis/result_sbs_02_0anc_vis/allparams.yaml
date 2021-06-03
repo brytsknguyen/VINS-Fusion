@@ -1,0 +1,11 @@
+loop_fusion_node: {pose_graph_save_path: /home/nuc/nucssd2/MATLAB_WS/RAL_edits/viralslam/RAL_VIRAL_SLAM/vins_fusion/result_sbs_02_0anc_vis/vins_ba_}
+rosdistro: 'melodic
+
+  '
+roslaunch:
+  uris: {host_192_168_1_12__41383: 'http://192.168.1.12:41383/'}
+rosversion: '1.14.10
+
+  '
+run_id: 1cfe79d4-a743-11eb-81cb-bc542fdf1ecf
+use_sim_time: true
