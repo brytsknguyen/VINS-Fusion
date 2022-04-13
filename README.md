@@ -1,3 +1,20 @@
+Fixes: for OpenCV 4.2.0 on Ubuntu20.04
+1. all CMakeFiles.txt: set(CMAKE_CXX_FLAGS "-std=c++14")
+2. #include <opencv2/imgproc/types_c.h>
+   - camera_model/src/chessboard/Chessboard.cc
+3. CV_AA = cv::LINE_AA, CV_GRAY2BGR = cv::COLOR_GRAY2BGR, CV_RGB2GRAY = cv::COLOR_RGB2GRAY
+   - camera_model/src/intrinsic_calib.cc
+   - camera_model/src/calib/CameraCalibration.cc
+   - camera_model/src/chessboard/Chessboard.cc
+   - pose_graph/src/ThirdParty/DVision/BRIEF.cpp
+4. cv::CALIB_CB_ADAPTIVE_THRESH, cv::CALIB_CB_NORMALIZE_IMAGE, cv::CALIB_CB_FILTER_QUADS, cv::CALIB_CB_FAST_CHECK
+   - camera_model/src/chessboard/Chessboard.cc:
+5. cv::FONT_HERSHEY_SIMPLEX
+   - pose_graph/src/pose_graph.cpp
+   - pose_graph/src/keyframe.cpp
+6. modify output_path & pose_graph_save_path ("./output" & "./output/pose_graph")
+   - .yaml in config folder
+   -
 # VINS-Fusion
 ## An optimization-based multi-sensor state estimator
 
