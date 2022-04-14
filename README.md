@@ -1,3 +1,6 @@
+Installation:
+* `sudo apt install metis`
+
 Fixes: for OpenCV 4.2.0 on Ubuntu20.04
 1. all CMakeFiles.txt: set(CMAKE_CXX_FLAGS "-std=c++14")
 2. #include <opencv2/imgproc/types_c.h>
