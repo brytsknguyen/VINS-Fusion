@@ -14,7 +14,7 @@ Fixes: for OpenCV 4.2.0 on Ubuntu20.04
    - camera_model/src/chessboard/Chessboard.cc:
 5. cv::FONT_HERSHEY_SIMPLEX
    - loop_fusion/src/pose_graph.cpp
-6. cv::LOAD_IMAGE_GRAYSCALE
+6. CV_LOAD_IMAGE_GRAYSCALE = cv::IMREAD_GRAYSCALE
    - vins_estimator/src/KITTIOdomTest.cpp
    - vins_estimator/src/KITTIGPSTest.cpp
 7. modify output_path & pose_graph_save_path ("./output" & "./output/pose_graph")
