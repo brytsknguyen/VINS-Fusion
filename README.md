@@ -1,4 +1,5 @@
 # VINS-Fusion branch for OpenCV 4.2.0
+* fork from [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) for OpenCV4.2.0 on Ubuntu20.04.4-LTS
 
 ## Modifications:
 1. all CMakeFiles.txt: set(CMAKE_CXX_FLAGS "-std=c++14")
@@ -19,8 +20,8 @@
 7. modify output_path & pose_graph_save_path ("./output" & "./output/pose_graph")
    - .yaml in config folder
 
-## Installation:
-### ROS1 Install
+## Dependencies
+### ROS1 Installation
 ```
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
@@ -53,7 +54,7 @@ cmake ../ceres-solver-2.1.0
 make -j4
 make install
 ```
-
+## Build
 ### Catkin Build
 ```
 sudo apt install metis
@@ -69,6 +70,7 @@ source devel/setup.bash
 ```
 *The build took ~30 hours on Ubuntu20.04 (i9-quad 2.67GHz)*<br>
 
+## Exercises:
 ### VI-Car
 ![](https://github.com/rkuo2000/Robotics/blob/gh-pages/images/VINS-Fusion_vi_car.png?raw=true)
 * VI-Car
