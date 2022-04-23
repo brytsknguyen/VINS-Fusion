@@ -1,5 +1,4 @@
-# VINS-Fusion branch for OpenCV 4.2.0
-* fork from [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) for OpenCV4.2.0 on Ubuntu20.04.4-LTS
+# [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) branch for OpenCV 4.2.0
 
 ## Modifications:
 1. all CMakeFiles.txt: set(CMAKE_CXX_FLAGS "-std=c++14")
@@ -21,7 +20,11 @@
    - .yaml in config folder
 
 ## Dependencies
-### ROS1 Installation
+### Ubuntu 20.04.4-LTS
+* Python 3.8.10
+* OpenCV 4.2.0
+
+### ROS1 installation
 ```
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
