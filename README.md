@@ -68,6 +68,27 @@ source devel/setup.bash
 ```
 *The build took ~30 hours on Ubuntu20.04 (i9-quad 2.67GHz)*<br>
 
+### VI-Car
+![](https://github.com/rkuo2000/Robotics/blob/gh-pages/images/VINS-Fusion_vi_car.png?raw=true)
+* VI-Car
+  - Download [car bag](https://drive.google.com/open?id=10t9H1u8pMGDOI6Q2w2uezEq5Ib-Z8tLz) to YOUR_DATASET_FOLDER.
+  - `roslaunch vins vins_rviz.launch`
+  - `rosrun vins vins_node ~/catkin_ws/src/VINS-Fusion/config/vi_car/vi_car.yaml`
+  - (optional) `rosrun loop_fusion loop_fusion_node ~/catkin_ws/src/VINS-Fusion/config/vi_car/vi_car.yaml`
+  - `rosbag play YOUR_DATASET_FOLDER/car.bag`
+  
+### EuRoC-MAV
+**MH_01_easy**<br>
+![](https://github.com/rkuo2000/Robotics/blob/gh-pages/images/VINS-Fusion_MH_01_easy.png?raw=true)
+![](https://github.com/rkuo2000/Robotics/blob/gh-pages/images/VINS-Fusion-EoRoC-MAV-MH_01_easy.gif?raw=true)
+
+* Monocualr camera + IMU
+  - `roslaunch vins vins_rviz.launch`
+  - `rosrun vins vins_node ~/catkin_ws/src/VINS-Fusion/config/euroc/euroc_mono_imu_config.yaml`
+  - (optional) `rosrun loop_fusion loop_fusion_node ~/catkin_ws/src/VINS-Fusion/config/euroc/euroc_mono_imu_config.yaml`
+  - `rosbag play YOUR_DATASET_FOLDER/MH_01_easy.bag`
+  
+---
 # VINS-Fusion
 ## An optimization-based multi-sensor state estimator
 
