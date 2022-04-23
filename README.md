@@ -1,7 +1,4 @@
-Installation:
-* `sudo apt install metis`
-
-Fixes: for OpenCV 4.2.0 on Ubuntu20.04
+# VINS-Fusion branch for OpenCV 4.2.0 on Ubuntu20.04
 1. all CMakeFiles.txt: set(CMAKE_CXX_FLAGS "-std=c++14")
 2. #include <opencv2/imgproc/types_c.h>
    - camera_model/src/chessboard/Chessboard.cc
@@ -19,7 +16,57 @@ Fixes: for OpenCV 4.2.0 on Ubuntu20.04
    - vins_estimator/src/KITTIGPSTest.cpp
 7. modify output_path & pose_graph_save_path ("./output" & "./output/pose_graph")
    - .yaml in config folder
-  
+
+Installation:
+### ROS1 Install
+```
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+sudo apt-get update
+export ROS1_DISTRO=noetic # kinetic=16.04, melodic=18.04, noetic=20.04
+sudo apt-get install ros-$ROS1_DISTRO-desktop-full
+sudo apt-get install python3-catkin-tools python3-osrf-pycommon # ubuntu 20.04
+sudo apt-get install libeigen3-dev libboost-all-dev libceres-dev
+```
+```
+echo "alias source_ros1=\"source /opt/ros/$ROS1_DISTRO/setup.bash\"" >> ~/.bashrc
+echo "alias source_devel=\"source devel/setup.bash\"" >> ~/.bashrc
+source ~/.bashrc
+```
+
+### [Ceres Solver installation](http://ceres-solver.org/installation.html)
+```
+sudo apt-get install cmake 
+sudo apt-get install libgoogle-glog-dev libgflags-dev
+sudo apt-get install libatlas-base-dev
+sudo apt-get install libeigen3-dev
+sudo apt-get install libsuitesparse-dev
+```
+```
+wget http://ceres-solver.org/ceres-solver-2.1.0.tar.gz
+tar zxf ceres-solver-2.1.0.tar.gz
+mkdir ceres-bin
+cd ceres-bin
+cmake ../ceres-solver-2.1.0
+make -j4
+make install
+```
+
+### Catkin Build
+```
+sudo apt install metis
+source_ros1
+```
+```
+make -p ~/catkin_ws/src
+cd ~/catkin_ws/src
+git clone https://github.com/rkuo/VINS-Fusion.git
+cd ../
+catkin build
+source devel/setup.bash
+```
+*The build took ~30 hours on Ubuntu20.04 (i9-quad 2.67GHz)*<br>
+
 # VINS-Fusion
 ## An optimization-based multi-sensor state estimator
 
