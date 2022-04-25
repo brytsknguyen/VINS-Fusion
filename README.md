@@ -19,7 +19,7 @@
 7. modify output_path & pose_graph_save_path ("./output" & "./output/pose_graph")
    - .yaml in config folder
 
-## Dependencies
+## 1. Prerequisites
 ### Ubuntu 20.04.4-LTS
 * Python 3.8.10
 * OpenCV 4.2.0
@@ -57,8 +57,7 @@ cmake ../ceres-solver-2.1.0
 make -j4
 make install
 ```
-## Build
-### Catkin Build
+## 2. Build on ROS
 ```
 sudo apt install metis
 source_ros1
@@ -73,7 +72,7 @@ source devel/setup.bash
 ```
 *The build took ~30 hours on Ubuntu20.04 (i9-quad 2.67GHz)*<br>
 
-## Exercises:
+## 3. Exercises:
 ### VI-Car
 ![](https://github.com/rkuo2000/Robotics/blob/gh-pages/images/VINS-Fusion_vi_car.png?raw=true)
 * VI-Car
