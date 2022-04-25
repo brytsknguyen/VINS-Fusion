@@ -1,4 +1,5 @@
 # [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) branch for OpenCV 4.2.0
+**[A General Optimization-based Framework for Local Odometry Estimation with Multiple Sensors](https://arxiv.org/pdf/1901.03638.pdf)**
 
 ## Modifications:
 1. all CMakeFiles.txt: set(CMAKE_CXX_FLAGS "-std=c++14")
