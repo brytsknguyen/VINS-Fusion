@@ -71,7 +71,7 @@ cd ../
 catkin build
 source devel/setup.bash
 ```
-<span style="color: red">*The build took ~30 hours on i7-920 @2.67GHz*<span style="color: red"><br>
+*The build took ~30 hours on i7-920 @2.67GHz !!!*<br>
 
 ## 3. Exercises:
 ### VI-Car
