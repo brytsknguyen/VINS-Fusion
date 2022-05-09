@@ -7,7 +7,7 @@ num_of_cam: 2
 imu_topic: ""
 image0_topic: "/leftImage"
 image1_topic: "/rightImage"
-output_path: "/home/tony-ws1/output/"
+output_path: "/home/rkuo/catkin_vins/output/"
 
 cam0_calib: "cam13-21.yaml"
 cam1_calib: "cam13-21.yaml"
