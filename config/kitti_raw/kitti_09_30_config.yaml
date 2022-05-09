@@ -7,7 +7,7 @@ num_of_cam: 2
 imu_topic: ""
 image0_topic: ""
 image1_topic: ""
-output_path: "/output"
+output_path: "./output"
 
 cam0_calib: "cam_09_30.yaml"
 cam1_calib: "cam_09_30.yaml"
