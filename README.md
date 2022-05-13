@@ -52,9 +52,10 @@ sudo apt-get install libsuitesparse-dev
 ```
 wget http://ceres-solver.org/ceres-solver-2.1.0.tar.gz
 tar zxf ceres-solver-2.1.0.tar.gz
+cd ceres-solver-2.1.0
 mkdir ceres-bin
 cd ceres-bin
-cmake ../ceres-solver-2.1.0
+cmake ..
 make -j4
 make install
 ```
