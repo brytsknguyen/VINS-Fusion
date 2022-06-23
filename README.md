@@ -82,7 +82,7 @@ source devel/setup.bash
 4. `rosbag play ~/datasets/vi_car/car.bag`
 ![](https://github.com/rkuo2000/Robotics/blob/gh-pages/images/VINS-Fusion_VI_Car.png?raw=true)
 
-### EuRoC-MAV
+### [EuRoC-MAV](https://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets)
 **MH_01_easy** (Monocualr camera + IMU)
 1. `roslaunch vins vins_rviz.launch`
 2. `rosrun vins vins_node ~/catkin_vins/src/VINS-Fusion/config/euroc/euroc_mono_imu_config.yaml`
