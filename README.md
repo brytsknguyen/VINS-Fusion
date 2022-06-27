@@ -3,22 +3,22 @@
 
 ## Modifications:
 1. all CMakeFiles.txt: set(CMAKE_CXX_FLAGS "-std=c++14")
-2. #include <opencv2/imgproc/types_c.h>
-   - camera_model/src/chessboard/Chessboard.cc
-3. CV_AA = cv::LINE_AA, CV_GRAY2BGR = cv::COLOR_GRAY2BGR, CV_RGB2GRAY = cv::COLOR_RGB2GRAY
-   - camera_model/src/intrinsic_calib.cc
-   - camera_model/src/calib/CameraCalibration.cc
-   - camera_model/src/chessboard/Chessboard.cc
-   - vins_estimator/src/featureTracker/feature_tracker.cpp
-4. cv::CALIB_CB_ADAPTIVE_THRESH, cv::CALIB_CB_NORMALIZE_IMAGE, cv::CALIB_CB_FILTER_QUADS, cv::CALIB_CB_FAST_CHECK
-   - camera_model/src/chessboard/Chessboard.cc:
-5. cv::FONT_HERSHEY_SIMPLEX
-   - loop_fusion/src/pose_graph.cpp
-6. CV_LOAD_IMAGE_GRAYSCALE = cv::IMREAD_GRAYSCALE
-   - vins_estimator/src/KITTIOdomTest.cpp
-   - vins_estimator/src/KITTIGPSTest.cpp
-7. modify output_path & pose_graph_save_path ("./output" & "./output/pose_graph")
-   - .yaml in config folder
+2. camera_model/src/chessboard/Chessboard.cc
+   - #include <opencv2/imgproc/types_c.h>
+   - CV_AA = cv::LINE_AA, CV_GRAY2BGR = cv::COLOR_GRAY2BGR, CV_RGB2GRAY = cv::COLOR_RGB2GRAY
+   - cv::CALIB_CB_ADAPTIVE_THRESH, cv::CALIB_CB_NORMALIZE_IMAGE, cv::CALIB_CB_FILTER_QUADS, cv::CALIB_CB_FAST_CHECK
+3. camera_model/src/intrinsic_calib.cc
+4. camera_model/src/calib/CameraCalibration.cc
+5. camera_model/src/chessboard/Chessboard.cc
+6. vins_estimator/src/featureTracker/feature_tracker.cpp
+7. loop_fusion/src/pose_graph.cpp
+   - cv::FONT_HERSHEY_SIMPLEX
+8. vins_estimator/src/KITTIOdomTest.cpp
+9. vins_estimator/src/KITTIGPSTest.cpp   
+   - CV_LOAD_IMAGE_GRAYSCALE = cv::IMREAD_GRAYSCALE
+   
+10. .yaml in config folder
+   - modify output_path & pose_graph_save_path ("./output" & "./output/pose_graph")
 
 ## 1. Prerequisites
 ### Ubuntu 20.04.4-LTS
