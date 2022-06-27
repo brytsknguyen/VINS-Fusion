@@ -7,15 +7,14 @@
    - cv::CALIB_CB_ADAPTIVE_THRESH, cv::CALIB_CB_NORMALIZE_IMAGE, cv::CALIB_CB_FILTER_QUADS, cv::CALIB_CB_FAST_CHECK
 3. camera_model/src/intrinsic_calib.cc
 4. camera_model/src/calib/CameraCalibration.cc
-5. camera_model/src/chessboard/Chessboard.cc
-6. vins_estimator/src/featureTracker/feature_tracker.cpp
-7. loop_fusion/src/pose_graph.cpp
+5. vins_estimator/src/featureTracker/feature_tracker.cpp
+6. loop_fusion/src/pose_graph.cpp
    - cv::FONT_HERSHEY_SIMPLEX
-8. vins_estimator/src/KITTIOdomTest.cpp
-9. vins_estimator/src/KITTIGPSTest.cpp   
+7. vins_estimator/src/KITTIOdomTest.cpp
+8. vins_estimator/src/KITTIGPSTest.cpp   
    - CV_LOAD_IMAGE_GRAYSCALE = cv::IMREAD_GRAYSCALE
    
-10. .yaml in config folder
+9. .yaml in config folder
    - modify output_path & pose_graph_save_path ("./output" & "./output/pose_graph")
 
 ## An optimization-based multi-sensor state estimator
