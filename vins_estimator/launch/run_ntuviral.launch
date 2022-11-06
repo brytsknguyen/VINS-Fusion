@@ -10,7 +10,7 @@
 
 
     <!-- ######### Choose the dataset ################################### -->
-    <arg name="bag_file" default = "/home/nuc/DATASETS/NTU_VIRAL/eee_01/eee_01.bag" />
+    <arg name="bag_file" default = "/media/oblam/mySataSSD2/NTU_VIRAL/eee_01/eee_01_mod.bag" />
 
 
     <!-- VINS node -->

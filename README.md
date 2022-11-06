@@ -21,7 +21,25 @@ In this we add extra script and configuration files to quickly run the experimen
 
 If you use the NTU VIRAL dataset in your work, please cite our work using the BibTex code at the dataset's [website](https://ntu-aris.github.io/ntu_viral_dataset/). Please also cite VINS-Fusion's publication below.
 
-# VINS-Fusion
+# VINS-Fusion branch for OpenCV 4.2 (adapted from https://github.com/rkuo2000/VINS-Fusion/)
+## Modifications:
+1. all CMakeFiles.txt: set(CMAKE_CXX_FLAGS "-std=c++14")
+2. camera_model/src/chessboard/Chessboard.cc
+   - #include <opencv2/imgproc/types_c.h>
+   - CV_AA = cv::LINE_AA, CV_GRAY2BGR = cv::COLOR_GRAY2BGR, CV_RGB2GRAY = cv::COLOR_RGB2GRAY
+   - cv::CALIB_CB_ADAPTIVE_THRESH, cv::CALIB_CB_NORMALIZE_IMAGE, cv::CALIB_CB_FILTER_QUADS, cv::CALIB_CB_FAST_CHECK
+3. camera_model/src/intrinsic_calib.cc
+4. camera_model/src/calib/CameraCalibration.cc
+5. vins_estimator/src/featureTracker/feature_tracker.cpp
+6. loop_fusion/src/pose_graph.cpp
+   - cv::FONT_HERSHEY_SIMPLEX
+7. vins_estimator/src/KITTIOdomTest.cpp
+8. vins_estimator/src/KITTIGPSTest.cpp   
+   - CV_LOAD_IMAGE_GRAYSCALE = cv::IMREAD_GRAYSCALE
+   
+9. .yaml in config folder
+   - modify output_path & pose_graph_save_path ("./output" & "./output/pose_graph")
+
 ## An optimization-based multi-sensor state estimator
 
 <img src="https://github.com/HKUST-Aerial-Robotics/VINS-Fusion/blob/master/support_files/image/vins_logo.png" width = 55% height = 55% div align=left />

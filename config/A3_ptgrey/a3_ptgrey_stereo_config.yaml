@@ -8,7 +8,7 @@ num_of_cam: 2
 imu_topic: "/djiros/imu"
 image0_topic: "/stereo/left/image"
 image1_topic: "/stereo/right/image"
-output_path: "/home/dji/output/"
+output_path: "./output"
 
 cam0_calib: "left.yaml"
 cam1_calib: "right.yaml"
