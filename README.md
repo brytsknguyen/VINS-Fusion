@@ -1,3 +1,9 @@
+# Running on Ubuntu 20.04
+
+If you are on Ubuntu 20.04. Please checkout the branch `noetic`.
+
+(Credits to https://github.com/rkuo2000/VINS-Fusion/ for the modifications).
+
 # Hello
 
 This is a forked repository of [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion).
